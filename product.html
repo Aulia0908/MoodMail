@@ -27,139 +27,27 @@
         </ul>   
     </nav>
     </div>
-     
+<div id="product-section">
+    <!-- Konten form yang tidak boleh discroll -->
+</div>
    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('send')">Make it for someone</button>
-      <button class="tab-btn" onclick="switchTab('search')">Search Name</button>
-      <button class="tab-btn" onclick="switchTab('history')">History</button>
-    </div>
-
-  <!-- SEND TAB -->
-  <div id="send" class="tab-content active">
-    <div class="card">
-      <h2>Send a MoodMail</h2>
-      <input type="text" placeholder="Receiver Name" id="receiver">
-      <textarea placeholder="Your message..." id="message"></textarea>
-      <input type="text" placeholder="Song Link" id="song">
-      <br>
-      <button class="send-btn" onclick="saveMessage()">Send</button>
-    </div>
+    <button onclick="showForm()">Search Name</button>
+    <button onclick="showForm()">Make it for someone</button>
+    <button onclick="showHistory()">History</button>
   </div>
 
-  <!-- SEARCH TAB -->
-  <div id="search" class="tab-content">
-    <div class="card">
-      <h2>Enter Name</h2>
-      <input type="text" placeholder="e.g. syla" id="searchName">
-      <button class="send-btn" onclick="searchMessage()">Search</button>
-      <div id="searchResult"></div>
-    </div>
+  <div class="card" id="form-card">
+    <label><strong>Receiver Name:</strong></label>
+    <input type="text" placeholder="e.g. Alicia" />
+
+    <label><strong>Message:</strong></label>
+    <textarea placeholder="Write your message..."></textarea>
+
+    <label><strong>Song Link:</strong></label>
+    <input type="text" placeholder="e.g. https://youtu.be/..." />
+
+    <button class="send-btn">Send</button>
   </div>
 
-  <!-- HISTORY TAB -->
-  <div id="history" class="tab-content"><div id="history-section" class="tab-content" style="display: none;">
-  <h2 style="text-align: center; font-family: 'Comic Sans MS', cursive;">All MoodMails</h2>
-
-  <div class="card-container">
-    <!-- Card loop -->
-    <div class="moodmail-card">
-      <div class="to">To: lia</div>
-      <div class="message">hello</div>
-      <div class="song">
-        🎵 <a href="https://open.spotify.com/..." target="_blank"><b>Link Lagu</b></a>
-      </div>
-    </div>
-    <!-- Tambahkan card lain di sini -->
-  </div>
-</div>
-
-   <div id="history-section" class="tab-content" style="display: none;">
-  <h2 style="text-align: center; font-family: 'Comic Sans MS', cursive;">All MoodMails</h2>
-
-  <div class="card-container">
-    <!-- Card loop -->
-    <div class="moodmail-card">
-      <div class="to">To: lia</div>
-      <div class="message">hello</div>
-      <div class="song">
-        🎵 <a href="https://open.spotify.com/..." target="_blank"><b>Link Lagu</b></a>
-      </div>
-    </div>
-    <!-- Tambahkan card lain di sini -->
-  </div>
-</div>
-
-
-
- <script>
-    const tabs = document.querySelectorAll(".tab-btn");
-    const contents = document.querySelectorAll(".tab-content");
-
-    function switchTab(tabId) {
-      contents.forEach(c => c.classList.remove("active"));
-      tabs.forEach(b => b.classList.remove("active"));
-
-      document.getElementById(tabId).classList.add("active");
-      event.target.classList.add("active");
-
-      if (tabId === "history") loadHistory();
-    }
-
-    let messages = [];
-
-    function saveMessage() {
-      const receiver = document.getElementById("receiver").value.trim();
-      const message = document.getElementById("message").value.trim();
-      const song = document.getElementById("song").value.trim();
-
-      if (receiver && message && song) {
-        messages.push({ receiver, message, song });
-        alert("MoodMail sent!");
-        document.getElementById("receiver").value = "";
-        document.getElementById("message").value = "";
-        document.getElementById("song").value = "";
-      } else {
-        alert("Please fill in all fields.");
-      }
-    }
-
-    function loadHistory() {
-      const list = document.getElementById("historyList");
-      list.innerHTML = "";
-      messages.forEach(msg => {
-        const card = document.createElement("div");
-        card.className = "history-card";
-        card.innerHTML = `
-          <h4>To: ${msg.receiver}</h4>
-          <p>${msg.message}</p>
-          <div class="song">🎵 ${msg.song}</div>
-        `;
-        list.appendChild(card);
-      });
-    }
-
-    function searchMessage() {
-      const name = document.getElementById("searchName").value.trim().toLowerCase();
-      const resultDiv = document.getElementById("searchResult");
-      resultDiv.innerHTML = "";
-
-      const filtered = messages.filter(m => m.receiver.toLowerCase().includes(name));
-
-      if (filtered.length === 0) {
-        resultDiv.innerHTML = "<p>No results found.</p>";
-      } else {
-        filtered.forEach(msg => {
-          const card = document.createElement("div");
-          card.className = "history-card";
-          card.innerHTML = `
-            <h4>To: ${msg.receiver}</h4>
-            <p>${msg.message}</p>
-            <div class="song">🎵 ${msg.song}</div>
-          `;
-          resultDiv.appendChild(card);
-        });
-      }
-    }
-  </script>
 </body>
 </html>
