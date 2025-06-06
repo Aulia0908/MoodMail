@@ -30,24 +30,105 @@
 <div id="product-section">
     <!-- Konten form yang tidak boleh discroll -->
 </div>
-   <div class="tabs">
-    <button onclick="showForm()">Search Name</button>
-    <button onclick="showForm()">Make it for someone</button>
-    <button onclick="showHistory()">History</button>
+ <div class="tabs">
+    <button onclick="showTab('make')">Make it for someone</button>
+    <button onclick="showTab('search')">Search Name</button>
+    <button onclick="showTab('history')">History</button>
   </div>
 
-  <div class="card" id="form-card">
-    <label><strong>Receiver Name:</strong></label>
-    <input type="text" placeholder="e.g. Alicia" />
-
-    <label><strong>Message:</strong></label>
-    <textarea placeholder="Write your message..."></textarea>
-
-    <label><strong>Song Link:</strong></label>
-    <input type="text" placeholder="e.g. https://youtu.be/..." />
-
-    <button class="send-btn">Send</button>
+  <!-- Make it for someone -->
+  <div id="make" class="tab-content active">
+    <div class="card">
+      <h3>Send a MoodMail</h3>
+      <input type="text" id="receiver" placeholder="Receiver Name">
+      <textarea id="message" rows="4" placeholder="Your message..."></textarea>
+      <input type="text" id="song" placeholder="Song Link">
+      <button class="send" onclick="sendMessage()">Send</button>
+    </div>
   </div>
 
+  <!-- Search Name -->
+  <div id="search" class="tab-content">
+    <div class="card">
+      <h3>Enter Name</h3>
+      <input type="text" id="searchName" placeholder="e.g. Alicia">
+      <button class="send" onclick="searchMessage()">Search</button>
+    </div>
+    <div id="searchResult" style="margin-top: 20px;"></div>
+  </div>
+
+  <!-- History -->
+  <div id="history" class="tab-content">
+    <div id="historyList" style="margin-top: 10px;"></div>
+  </div>
+
+  <script>
+    let messages = [];
+
+    function showTab(tab) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById(tab).classList.add('active');
+      if (tab === 'history') loadHistory();
+    }
+
+    function sendMessage() {
+      const receiver = document.getElementById('receiver').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const song = document.getElementById('song').value.trim();
+      if (receiver && message && song) {
+        messages.push({receiver, message, song});
+        alert("Message sent!");
+        document.getElementById('receiver').value = '';
+        document.getElementById('message').value = '';
+        document.getElementById('song').value = '';
+      } else {
+        alert("Please fill out all fields.");
+      }
+    }
+
+    function searchMessage() {
+      const name = document.getElementById('searchName').value.trim().toLowerCase();
+      const resultDiv = document.getElementById('searchResult');
+      resultDiv.innerHTML = '';
+      const found = messages.filter(msg => msg.receiver.toLowerCase() === name);
+      if (found.length > 0) {
+        found.forEach(msg => {
+          const div = document.createElement('div');
+          div.className = 'history-card';
+          div.innerHTML = `
+            <strong>To:</strong> ${msg.receiver}<br>
+            <strong>Message:</strong> ${msg.message}<br>
+            <strong>Song:</strong> <a href="${msg.song}" target="_blank">${msg.song}</a>
+          `;
+          resultDiv.appendChild(div);
+        });
+      } else {
+        resultDiv.innerHTML = "<p>No message found.</p>";
+      }
+    }
+
+    function loadHistory() {
+      const historyDiv = document.getElementById('historyList');
+      historyDiv.innerHTML = '';
+      if (messages.length === 0) {
+        historyDiv.innerHTML = "<p>No messages yet.</p>";
+        return;
+      }
+      messages.forEach(msg => {
+        const div = document.createElement('div');
+        div.className = 'history-card';
+        div.innerHTML = `
+          <strong>To:</strong> ${msg.receiver}<br>
+          <strong>Message:</strong> ${msg.message}<br>
+          <strong>Song:</strong> <a href="${msg.song}" target="_blank">${msg.song}</a>
+        `;
+        historyDiv.appendChild(div);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      showTab('make');
+    });
+  </script>
 </body>
 </html>
