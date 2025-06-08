@@ -214,7 +214,7 @@ nav ul li a:hover {
 
 .embed-canva iframe {
   width: 100px;
-  max-width: 800px;
+  max-width: 500px;
   height: 500px;
   border: none;
   border-radius: 10px;
