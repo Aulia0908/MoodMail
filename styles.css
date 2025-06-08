@@ -103,7 +103,7 @@ nav ul li a:hover {
 }
 
 #about {
-  padding: 10px 40px;
+  padding: 80px 40px;
   background: url(download.jpg);
   scroll-margin-top: 120px;
   background-size: cover;
@@ -119,33 +119,27 @@ nav ul li a:hover {
 .scroll-container {
   justify-content: center;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   position: relative;
-  padding: 10px;
-  gap: 40px;
-  
-}
-
-
-.profile-card {
-  text-align: center;
-  position: static;
-  width: 200px;
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
   padding: 20px;
+}
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 270px;
+  width: 100%;
+  background: #fff;
+  border-radius: 24px;
+  padding: 25px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  transition: tranform 0.3s ease, box-shadow 0.3s ease;
-  z-index: 1;
+  position: relative;
 }
 
 .image {
   position: relative;
-  height: auto;
-  display: block;
-  width: 100%;
+  height: 170px;
+  width: 170px;
   border-radius: 20px;
   background-color: #83394a;
   padding: 2px;
@@ -213,43 +207,12 @@ nav ul li a:hover {
 }
 
 .embed-canva iframe {
-  width: 100%;
-  max-width: 600px;
+  width: 90%;
+  max-width: 800px;
   height: 500px;
   border: none;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-header, nav {
-  margin: 0;
-  padding: 20px 0;
-  background-color: #f8a9c5; /* sesuai warna navbar */
-  width: 100%;
-}
-
-.nav a {
-  margin: 0 15px;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  border-bottom: 2px solid transparent;
-}
-
-.nav a:hover, .nav a.active {
-  border-bottom: 2px solid white;
-}
-
-#home-section,
-#about-section,
-#design-section {
-  min-height: 100vh;         
-  overflow-y: auto;          
-}
-
-#product-section {
-  height: 20vh;            
-  overflow: hidden;          
-  position: relative;         
 }
 
 body {
