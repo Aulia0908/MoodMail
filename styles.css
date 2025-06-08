@@ -213,8 +213,8 @@ nav ul li a:hover {
 }
 
 .embed-canva iframe {
-  width: 90%;
-  max-width: 800px;
+  width: 100%;
+  max-width: 600px;
   height: 500px;
   border: none;
   border-radius: 10px;
