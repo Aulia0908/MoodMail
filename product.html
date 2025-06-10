@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head></head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat+Brush&family=DynaPuff:wght@400..700&family=Fredoka:wght@300..700&family=Gloria+Hallelujah&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Jockey+One&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Londrina+Solid:wght@100;300;400;900&family=Neucha&family=Oldenburg&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Rowdies:wght@300;400;700&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&family=Signika+Negative:wght@300..700&family=Square+Peg&family=Sue+Ellen+Francisco&family=Voltaire&family=Wendy+One&display=swap" rel="stylesheet">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>MoodMail</title>
+</head>
 <body>
-    <nav>
-        <div class="logo">
-        <img src="logo.png" alt="MoodMail" class="logo">
-        </div> 
-        <!--Tulisan di antar logo dan menu-->
-        <div class="tagline">Send Your Massage Here!</div>
-            <ul>
-            <li><a href="index.html#home">Home</a></li>
-            <li><a href="index.html#about">About Us</a></li>
-            <li><a href="design-process.html">Design Process</a></li>
-            <li><a href="product.html">Product</a></li>
-        </ul>   
-    </nav>
-</div>
-<div id="product-section">
+  <nav>
+    <div class="logo">
+      <img src="logo.png" alt="MoodMail" class="logo" />
+    </div>
+    <div class="tagline">Send Your Massage Here!</div>
+    <ul>
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#about">About Us</a></li>
+      <li><a href="design process.html">Design Process</a></li>
+      <li><a href="product.html">Product</a></li>
+    </ul>
+  </nav>
+
+  <div id="product-section">
     <!-- Konten form yang tidak boleh discroll -->
-</div>
- <div class="tabs">
+  </div>
+
+  <div class="tabs">
     <button onclick="showTab('make')">Make it for someone</button>
     <button onclick="showTab('search')">Search Name</button>
     <button onclick="showTab('history')">History</button>
@@ -35,9 +36,9 @@
   <div id="make" class="tab-content active">
     <div class="card">
       <h3>Send a MoodMail</h3>
-      <input type="text" id="receiver" placeholder="Receiver Name">
+      <input type="text" id="receiver" placeholder="Receiver Name" />
       <textarea id="message" rows="4" placeholder="Your message..."></textarea>
-      <input type="text" id="song" placeholder="Song Link">
+      <input type="text" id="song" placeholder="Song Link" />
       <button class="send" onclick="sendMessage()">Send</button>
     </div>
   </div>
@@ -46,7 +47,7 @@
   <div id="search" class="tab-content">
     <div class="card">
       <h3>Enter Name</h3>
-      <input type="text" id="searchName" placeholder="e.g. Alicia">
+      <input type="text" id="searchName" placeholder="e.g. Alicia" />
       <button class="send" onclick="searchMessage()">Search</button>
     </div>
     <div id="searchResult" style="margin-top: 20px;"></div>
@@ -55,11 +56,10 @@
   <!-- History -->
   <div id="history" class="tab-content">
     <div id="historyList" style="margin-top: 10px;"></div>
-</p>
   </div>
 
   <script>
-    let messages = [];
+    let messages = JSON.parse(localStorage.getItem("messages")) || [];
 
     function showTab(tab) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -71,9 +71,13 @@
       const receiver = document.getElementById('receiver').value.trim();
       const message = document.getElementById('message').value.trim();
       const song = document.getElementById('song').value.trim();
+
       if (receiver && message && song) {
-        messages.push({receiver, message, song});
+        const newMessage = { receiver, message, song };
+        messages.push(newMessage);
+        localStorage.setItem("messages", JSON.stringify(messages));
         alert("Message sent!");
+
         document.getElementById('receiver').value = '';
         document.getElementById('message').value = '';
         document.getElementById('song').value = '';
@@ -86,6 +90,7 @@
       const name = document.getElementById('searchName').value.trim().toLowerCase();
       const resultDiv = document.getElementById('searchResult');
       resultDiv.innerHTML = '';
+
       const found = messages.filter(msg => msg.receiver.toLowerCase() === name);
       if (found.length > 0) {
         found.forEach(msg => {
@@ -106,10 +111,12 @@
     function loadHistory() {
       const historyDiv = document.getElementById('historyList');
       historyDiv.innerHTML = '';
+
       if (messages.length === 0) {
         historyDiv.innerHTML = "<p>No messages yet.</p>";
         return;
       }
+
       messages.forEach(msg => {
         const div = document.createElement('div');
         div.className = 'history-card';
@@ -126,8 +133,5 @@
       showTab('make');
     });
   </script>
-    <footer>
-        <p>C 2025 MoodMail. All rights reserved.</p>
-    </footer>  
 </body>
 </html>
