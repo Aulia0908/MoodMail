@@ -20,11 +20,9 @@ body {
 .tagline {
   flex-grow: 1;
   text-align: center;
-  font-family: "Caveat Brush", cursive;
-  font-weight: 400;
-  font-style: normal;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   color: #4a203f;
-  font-size: 50px;
+  font-size: 30px;
   padding-right:10rem;
 }
 nav {
@@ -52,18 +50,15 @@ nav ul {
 
 nav ul li a {
   text-decoration: none;
-  font-family: "Bebas Neue", sans-serif;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
   color: #363636; /*ganti warna teks nav bar*/
-  font-weight: 400;
-  font-style: normal;
+  font-weight: 600;
   font-size: 18px;
   padding: 5px 10px;
-  transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-  color: #fae6e7;
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid black;
 }
 
 .home {
@@ -85,9 +80,7 @@ nav ul li a:hover {
   padding-bottom: 20px;
   padding-top: 0.1px;
   box-sizing: content-box;
-  font-family: "Wendy One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+  font-family: "verona";
 }
 
 .MoodMail span{
@@ -100,47 +93,25 @@ nav ul li a:hover {
   padding-bottom: 20px;
   padding-top: 0.1px;
   box-sizing: content-box;
-  font-family: "Wendy One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+  font-family: "verona";
 }
-.home-title {
-  font-size: 100px;
-  font-family: "Shantell Sans", cursive;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings:
-  "BNCE" 0,
-  "INFM" 0,
-  "SPAC" 0;
-}
-.about-title {
-  font-family: "Oldenburg", serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 70px;
-}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20p x;
+  padding: 0 20px;
 }
 
 #about {
-  padding: 10px 40px;
+  padding: 80px 40px;
   background: url(download.jpg);
   scroll-margin-top: 120px;
   background-size: cover;
   background-position: center;
 }
 
-
 .content {
-  font-family: "Voltaire", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 20px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   color: #2e1d21;
   text-align: left;
   padding: 0.1px;
@@ -148,76 +119,64 @@ nav ul li a:hover {
 .scroll-container {
   justify-content: center;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   position: relative;
-  padding: 10px;
-  gap: 40px;
-  
-}
-
-.profile-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: stretch;
-  height: 100%;
-  gap: 30px;
-  padding: 40px;
-}
-
-.profile-card {
-  width: 250px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  text-align: center;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   padding: 20px;
 }
-
-.profile-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 270px;
+  width: 100%;
+  background: #fff;
+  border-radius: 24px;
+  padding: 25px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
-.profile-card img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
+.image {
+  position: relative;
+  height: 170px;
+  width: 170px;
+  border-radius: 20px;
+  background-color: #83394a;
+  padding: 2px;
+  margin-bottom: 10px;
+}
+
+.profile-img {
+  height: 100%;
+  width: 100%;
   object-fit: cover;
-  margin-bottom: 15px;
+  border-radius: 20px;
+  align-items: center;
+  border: 2px solid #fff;
 }
-
-.profile-card h3 {
-  font-family: "Jockey One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  margin: 10px 0 5px;
-  font-size: 16px;
+.profile-card .text-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: #333;
 }
-
-.profile-card h4 {
-  font-family: "Josefin Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  margin: 5px 0;
-  font-size: 20px;
-  color: #4a203a;
+.text-data .name {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  text-align: center;
 }
-
-.profile-card p {
-  font-family: "Playfair", serif;
-  font-optical-sizing: auto;
+.text-data .job {
+  font-family: "ADLaM Display", system-ui;
+  font-size: 15px;
   font-weight: 400;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
-  font-size: 14px;
-  color: #121212;
-  padding: 0 10px;
+  align-content: center;
+  padding-top: 2px;
+}
+.text-data .jobdesk {
+  font-size: 15px;
+  font-weight: 400;
+  text-align: center;
 }
 .container {
   padding: 90px;
@@ -238,10 +197,7 @@ nav ul li a:hover {
   text-align: center;
   color: #c14e76;
 }
-.about-content {
-  text-align: center;
-  font-size: 25px;
-}
+
 .embed-canva {
   display: flex;
   justify-content: center;
@@ -301,12 +257,17 @@ body {
 }
 
 .card {
-  background-color: #ffe0eb;
-  width: 400px;
-  margin: 30px auto;
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+ background-color: #fff0f5;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 80%; /* memanjang */
+  max-width: 1000px; /* bisa atur sesuai layar */
+  margin: 20px auto;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  box-sizing: border-box;
 }
 
 label {
@@ -436,7 +397,7 @@ button.send {
   border-radius: 20px;
   padding: 15px;
   margin-bottom: 10px;
-  width: 350px;
+  width: 550px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
@@ -461,12 +422,4 @@ main {
   overflow-wrap: break-word;
   color: #d63384;
   text-decoration: none;
-}
-footer {
-  text-align: center;
-  padding: 20px;
-  background-color: #f4bbc9;
-  color: #363636;
-  font-size: 14px;
-  margin-top: 50px;
 }
