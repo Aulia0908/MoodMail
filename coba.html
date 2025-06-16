@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>MoodMail</title>
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #ffe6f0;
+    padding: 20px;
+    margin: 0;
+  }
+
+  .tabs {
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .tabs button {
+    padding: 10px 20px;
+    margin: 5px;
+    background: #ff99cc;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+  }
+
+  .tab-content {
+    display: none;
+    margin-top: 20px;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  .card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 0 10px pink;
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto; /* <-- membuat kotak card di tengah */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    resize: none;
+  }
+
+  button.send {
+    padding: 10px;
+    background-color: #ff66a3;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .history-card {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    margin: 10px auto;
+    max-width: 500px;
+    box-shadow: 0 0 5px #ccc;
+  }
+
+  table {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+
+  th {
+    background-color: #ffccdd;
+  }
+</style>
+
+</head>
+<body>
+  <h1>💌 MoodMail</h1>
+  <div class="tabs">
+    <button onclick="showTab('make')">Make it for someone</button>
+    <button onclick="showTab('search')">Search Name</button>
+    <button onclick="showTab('history')">History</button>
+    <button onclick="showTab('table')">📋 Table (from HuggingFace)</button>
+  </div>
+
+  <!-- Make it for someone -->
+  <div id="make" class="tab-content active">
+    <div class="card">
+      <h3>Send a MoodMail</h3>
+      <input type="text" id="receiver" placeholder="Receiver Name" /><br><br>
+      <textarea id="message" rows="4" placeholder="Your message..."></textarea><br><br>
+      <input type="text" id="song" placeholder="Song Link" /><br><br>
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <!-- Search Name -->
+  <div id="search" class="tab-content">
+    <div class="card">
+      <h3>Enter Name</h3>
+      <input type="text" id="searchName" placeholder="e.g. Alicia" />
+      <button onclick="searchMessage()">Search</button>
+    </div>
+    <div id="searchResult" style="margin-top: 20px;"></div>
+  </div>
+
+  <!-- History -->
+  <div id="history" class="tab-content">
+    <div id="historyList"></div>
+  </div>
+
+  <!-- Table from Hugging Face -->
+  <div id="table" class="tab-content">
+    <h3>📋 MoodMail Data (from Hugging Face)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>To</th>
+          <th>Message</th>
+          <th>Song</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    let messages = JSON.parse(localStorage.getItem("messages")) || [];
+
+    function showTab(tab) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById(tab).classList.add('active');
+      if (tab === 'history') loadHistory();
+      if (tab === 'table') loadFromHuggingFace();
+    }
+
+    function sendMessage() {
+      const receiver = document.getElementById('receiver').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const song = document.getElementById('song').value.trim();
+
+      if (receiver && message && song) {
+        const newMessage = { receiver, message, song, timestamp: new Date().toLocaleString() };
+        messages.push(newMessage);
+        localStorage.setItem("messages", JSON.stringify(messages));
+        alert("Message sent!");
+        document.getElementById('receiver').value = '';
+        document.getElementById('message').value = '';
+        document.getElementById('song').value = '';
+      } else {
+        alert("Please fill out all fields.");
+      }
+    }
+
+    function searchMessage() {
+      const name = document.getElementById('searchName').value.trim().toLowerCase();
+      const resultDiv = document.getElementById('searchResult');
+      resultDiv.innerHTML = '';
+
+      const found = messages.filter(msg => msg.receiver.toLowerCase() === name);
+      if (found.length > 0) {
+        found.forEach(msg => {
+          const div = document.createElement('div');
+          div.className = 'history-card';
+          div.innerHTML = `
+            <strong>To:</strong> ${msg.receiver}<br>
+            <strong>Message:</strong> ${msg.message}<br>
+            <strong>Song:</strong> <a href="${msg.song}" target="_blank">${msg.song}</a>
+          `;
+          resultDiv.appendChild(div);
+        });
+      } else {
+        resultDiv.innerHTML = "<p>No message found.</p>";
+      }
+    }
+
+    function loadHistory() {
+      const historyDiv = document.getElementById('historyList');
+      historyDiv.innerHTML = '';
+
+      if (messages.length === 0) {
+        historyDiv.innerHTML = "<p>No messages yet.</p>";
+        return;
+      }
+
+      messages.forEach(msg => {
+        const div = document.createElement('div');
+        div.className = 'history-card';
+        div.innerHTML = `
+          <strong>To:</strong> ${msg.receiver}<br>
+          <strong>Message:</strong> ${msg.message}<br>
+          <strong>Song:</strong> <a href="${msg.song}" target="_blank">${msg.song}</a><br>
+          <small>${msg.timestamp}</small>
+        `;
+        historyDiv.appendChild(div);
+      });
+    }
+
+    async function loadFromHuggingFace() {
+      const url = "https://bajigurrr-moodmail.hf.space/api/messages";  // Ganti ke URL endpoint JSON kamu
+      const tbody = document.getElementById("tableBody");
+      tbody.innerHTML = "";
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        data.forEach(msg => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${msg.name}</td>
+            <td>${msg.message}</td>
+            <td><a href="${msg.song}" target="_blank">${msg.song}</a></td>
+            <td>${msg.timestamp}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        tbody.innerHTML = "<tr><td colspan='4'>Failed to load data.</td></tr>";
+        console.error("Fetch error:", err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => showTab('make'));
+  </script>
+</body>
+</html>
